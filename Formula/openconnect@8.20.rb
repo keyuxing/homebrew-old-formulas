@@ -23,6 +23,7 @@ class OpenconnectAT820 < Formula
   depends_on "gettext"
   depends_on "gnutls"
   depends_on "stoken"
+  depends_on "libiconv"
 
   resource "vpnc-script" do
     url "https://gitlab.com/openconnect/vpnc-scripts/raw/cda38498bee5e21cb786f2c9e78ecab251c997c3/vpnc-script"
@@ -43,6 +44,8 @@ class OpenconnectAT820 < Formula
       --sbindir=#{bin}
       --localstatedir=#{var}
       --with-vpnc-script=#{etc}/vpnc-script
+      LDFLAGS=-L#{Formula["libiconv"].opt_lib}
+      CPPFLAGS=-I#{Formula["libiconv"].opt_include}
     ]
 
     system "./configure", *args
